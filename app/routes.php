@@ -6,6 +6,7 @@ use Slim\Views\Twig;
 
 // Simple response
 $app->get('/', function (Request $request, Response $response) {
+    $this->get('logger')->info("Slim-PHP-DI '/' route");
     $response->getBody()->write("<h1>Hello World!</h1>");
     return $response;
 });

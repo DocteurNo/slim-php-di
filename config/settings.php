@@ -6,6 +6,18 @@ use Slim\Views\Twig;
 
 return [
     'settings.displayErrorDetails' => true,
+    'settings.logger' => [
+        'name' => 'slim-app',
+        'path' => isset($_ENV['docker']) ? 'php://stdout' : WEBROOT . '/logs/app.log',
+        'level' => \Monolog\Logger::DEBUG,
+    ],
+    'logger' => function (ContainerInterface $c) {
+        $settings = $c->get('settings.logger');
+        $logger = new Monolog\Logger($settings['name']);
+        $logger->pushProcessor(new Monolog\Processor\UidProcessor());
+        $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+        return $logger;
+    },
     Twig::class => function (ContainerInterface $c) {
         $twig = new Twig(WEBROOT . '/templates', [
             'cache' => false

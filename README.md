@@ -12,6 +12,7 @@ Les versions installées :
 - slim/slim => 3.10.0
 - slim/twig-view => 2.4.0
 - php-di/slim-bridge => 2.0.0
+- monolog/monolog => 1.x-dev
 
 ### Création d'un controller
 
