@@ -1,11 +1,11 @@
 <?php
 
 use Psr\Container\ContainerInterface;
-use App\Controllers\HomeController;
 use Slim\Views\Twig;
 
 return [
     'settings.displayErrorDetails' => true,
+    'settings.determineRouteBeforeAppMiddleware' => true,
     'settings.logger' => [
         'name' => 'slim-app',
         'path' => isset($_ENV['docker']) ? 'php://stdout' : WEBROOT . '/logs/app.log',
@@ -29,8 +29,5 @@ return [
 
         return $twig;
     },
-    'view' => \DI\get(Twig::class),
-    HomeController::class => function (ContainerInterface $c) {
-        return new HomeController($c);
-    }
+    'view' => \DI\get(Twig::class)
 ];
